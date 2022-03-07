@@ -1,17 +1,42 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
+import Button from "./Button";
+import Statics from "./Statics";
+import Title from "./Title";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const App = () => {
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  const handelClicks = (event) => {
+    let type = event.target.innerHTML;
+    switch (type) {
+      case "Good":
+        setGood(good + 1);
+        break;
+      case "Neutral":
+        setNeutral(neutral + 1);
+        break;
+      case "Bad":
+        setBad(bad + 1);
+        break;
+      default:
+        break;
+    }
+  };
+
+  return (
+    <div>
+      <Title title="Give Feedback" />
+      <Button handelFunction={handelClicks} text="Good" />
+      <Button handelFunction={handelClicks} text="Neutral" />
+      <Button handelFunction={handelClicks} text="Bad" />
+      <Title title="Statics" />
+      <Statics good={good} neutral={neutral} bad={bad} />
+    </div>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById("root"));
